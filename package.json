@@ -1,6 +1,6 @@
 {
   "name": "egg-valid",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Validation plugin for egg",
   "eggPlugin": {
     "name": "valid"
