@@ -9,24 +9,25 @@
 
 [npm-image]: https://img.shields.io/npm/v/egg-valid.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/egg-valid
-[travis-image]: https://img.shields.io/travis/eggjs/egg-valid.svg?style=flat-square
-[travis-url]: https://travis-ci.org/eggjs/egg-valid
-[codecov-image]: https://img.shields.io/codecov/c/github/eggjs/egg-valid.svg?style=flat-square
-[codecov-url]: https://codecov.io/github/eggjs/egg-valid?branch=master
-[david-image]: https://img.shields.io/david/eggjs/egg-valid.svg?style=flat-square
-[david-url]: https://david-dm.org/eggjs/egg-valid
+[travis-image]: https://img.shields.io/travis/Runrioter/egg-valid.svg?style=flat-square
+[travis-url]: https://travis-ci.org/Runrioter/egg-valid
+[codecov-image]: https://img.shields.io/codecov/c/github/Runrioter/egg-valid.svg?style=flat-square
+[codecov-url]: https://codecov.io/github/Runrioter/egg-valid?branch=master
+[david-image]: https://img.shields.io/david/Runrioter/egg-valid.svg?style=flat-square
+[david-url]: https://david-dm.org/Runrioter/egg-valid
 [snyk-image]: https://snyk.io/test/npm/egg-valid/badge.svg?style=flat-square
 [snyk-url]: https://snyk.io/test/npm/egg-valid
 [download-image]: https://img.shields.io/npm/dm/egg-valid.svg?style=flat-square
 [download-url]: https://npmjs.org/package/egg-valid
-[joi]: https://github.com/hapijs/joi
 
-A Validation plugin based on [Joi][joi] for egg [WIP: current based on Parameter]
+A better Validation plugin like laravel validation
+
+[WIP] 当前功能很鸡肋，等待丰富
 
 ## Install
 
 ```bash
-$ npm i egg-valid --save
+$ npm i egg-valid -S
 ```
 
 ## Usage
@@ -37,21 +38,18 @@ exports.valid = {
   enable: true,
   package: 'egg-valid',
 };
-```
 
-## Configuration
-
-```js
-// {app_root}/config/config.default.js
-exports.valid = {
-  translate: (...args) => {
-    console.log(args[0]);
-    if (args[0] === 'required') {
-      return '该字段为必须项';
-    }
-    return util.format.apply(util, args);
-  },
-};
+// {app_root}/controller/home.js
+class HomeController extends Controller {
+  async index() {
+    const { app, ctx } = this;
+    const rule = { username: 'required|alpha' };
+    const value = { username: 'runrioter2' };
+    const messages = { 'username.alpha': '该字段应该为字母串' };
+    const errors = app.validator.validate(value, rule, messages)
+    // ...
+  }
+}
 ```
 
 see [config/config.default.js](config/config.default.js) for more detail.

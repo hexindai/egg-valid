@@ -10,18 +10,17 @@
     "eggPlugin",
     "egg-plugin"
   ],
-  "dependencies": {
-    "parameter": "^2.2.1"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "autod": "^3.0.0",
-    "autod-egg": "^1.0.0",
-    "egg": "^2.0.0",
-    "egg-bin": "^4.3.0",
+    "autod": "^3.0.1",
+    "autod-egg": "^1.1.0",
+    "egg": "^2.5.0",
+    "egg-bin": "^4.5.0",
     "egg-ci": "^1.8.0",
-    "egg-mock": "^3.13.0",
-    "eslint": "^4.11.0",
-    "eslint-config-egg": "^5.1.0",
+    "egg-mock": "^3.16.0",
+    "eslint": "^4.19.1",
+    "eslint-config-egg": "^7.0.0",
+    "mocha": "^5.0.5",
     "should": "^13.2.1",
     "webstorm-disable-index": "^1.2.0"
   },
@@ -41,7 +40,8 @@
     "app",
     "config",
     "app.js",
-    "parameter.js"
+    "validation.js",
+    "lib"
   ],
   "ci": {
     "version": "8, 9"
