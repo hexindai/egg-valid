@@ -44,6 +44,13 @@ exports.valid = {
 ```js
 // {app_root}/config/config.default.js
 exports.valid = {
+  translate: (...args) => {
+    console.log(args[0]);
+    if (args[0] === 'required') {
+      return '该字段为必须项';
+    }
+    return util.format.apply(util, args);
+  },
 };
 ```
 
