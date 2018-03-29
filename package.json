@@ -22,6 +22,7 @@
     "egg-mock": "^3.13.0",
     "eslint": "^4.11.0",
     "eslint-config-egg": "^5.1.0",
+    "should": "^13.2.1",
     "webstorm-disable-index": "^1.2.0"
   },
   "engines": {
@@ -37,9 +38,10 @@
     "autod": "autod"
   },
   "files": [
+    "app",
+    "config",
     "app.js",
-    "agent.js",
-    "config"
+    "parameter.js"
   ],
   "ci": {
     "version": "8, 9"
