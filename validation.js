@@ -2,10 +2,14 @@
 
 const required = require('./lib/required');
 const alpha = require('./lib/alpha');
+const phone = require('./lib/phone');
+const password = require('./lib/password');
 
 const VERIFIERS = {
   required,
   alpha,
+  phone,
+  password,
 };
 
 /**

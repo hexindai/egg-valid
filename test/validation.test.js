@@ -53,6 +53,42 @@ describe('Validation', function() {
       }).should.throw('Rule alpha1 is not builtin, check your type or you should add custom rule');
     });
   });
+  describe('phone', function() {
+    it('should is a valid phone number', function() {
+      const rule = { phone: 'required|phone' };
+      const value = { phone: '15210001000' };
+      const messages = { 'phone.phone': '该手机号不合法' };
+      should.not.exist(validation.validate(value, rule, messages));
+    });
+    it('should is not a valid phone number', function() {
+      const rule = { phone: 'required|phone' };
+      const value = { phone: '25210001000' };
+      const messages = { 'phone.phone': '该手机号不合法' };
+      validation.validate(value, rule, messages)[0].should.eql({
+        code: 'invalid',
+        field: 'phone',
+        message: '该手机号不合法',
+      });
+    });
+  });
+  describe('password', function() {
+    it('should is a valid password', function() {
+      const rule = { password: 'required|password' };
+      const value = { password: '&*;+$,?#[]' };
+      const messages = { 'password.password': '密码格式错误' };
+      should.not.exist(validation.validate(value, rule, messages));
+    });
+    it('should is not a valid password', function() {
+      const rule = { password: 'required|password' };
+      const value = { password: '&*;+$,?#[]1234567890' };
+      const messages = { 'password.password': '密码长度有误' };
+      validation.validate(value, rule, messages)[0].should.eql({
+        code: 'invalid',
+        field: 'password',
+        message: '密码长度有误',
+      });
+    });
+  });
   describe('custom messages', function() {
     it('should work with custom plain message', function() {
       const rule = { username: 'required|alpha' };
