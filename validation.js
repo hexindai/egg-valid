@@ -47,8 +47,8 @@ class Validation {
    * @api public
    */
   validate(data, rules, messages = {}) {
-    if (typeof rules !== 'object') {
-      throw new TypeError('need object type rule');
+    if (!rules || typeof rules !== 'object') {
+      throw new TypeError('rules should be non-null object');
     }
 
     const errors = [];

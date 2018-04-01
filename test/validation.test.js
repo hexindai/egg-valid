@@ -5,6 +5,20 @@ const Validation = require('../validation');
 const validation = new Validation();
 
 describe('Validation', function() {
+
+  describe('#validate', function() {
+    it('should receive a non-null object', function() {
+      (function() {
+        const rules = null;
+        validation.validate({}, rules);
+      }).should.throw('rules should be non-null object');
+      (function() {
+        const rules = () => {};
+        validation.validate({}, rules);
+      }).should.throw('rules should be non-null object');
+    });
+  });
+
   describe('required', function() {
     it('should required work fine', function() {
       const rule = { int: 'required' };
@@ -53,6 +67,7 @@ describe('Validation', function() {
       }).should.throw('Rule alpha1 is not builtin, check your type or you should add custom rule');
     });
   });
+
   describe('phone', function() {
     it('should is a valid phone number', function() {
       const rule = { phone: 'required|phone' };
@@ -71,6 +86,7 @@ describe('Validation', function() {
       });
     });
   });
+
   describe('password', function() {
     it('should is a valid password', function() {
       const rule = { password: 'required|password' };
@@ -89,6 +105,7 @@ describe('Validation', function() {
       });
     });
   });
+
   describe('custom messages', function() {
     it('should work with custom plain message', function() {
       const rule = { username: 'required|alpha' };
