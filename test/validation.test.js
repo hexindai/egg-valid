@@ -106,6 +106,25 @@ describe('Validation', function() {
     });
   });
 
+  describe('captcha', function() {
+    it('should is a valid captcha', function() {
+      const rule = { captcha: 'required|captcha' };
+      const value = { captcha: '123456' };
+      const messages = { 'captcha.captcha': '手机验证码错误' };
+      should.not.exist(validation.validate(value, rule, messages));
+    });
+    it('should is not a valid captcha', function() {
+      const rule = { captcha: 'required|captcha' };
+      const value = { captcha: '12345i' };
+      const messages = { 'captcha.captcha': '手机验证码错误' };
+      validation.validate(value, rule, messages)[0].should.eql({
+        code: 'invalid',
+        field: 'captcha',
+        message: '手机验证码错误',
+      });
+    });
+  });
+
   describe('custom messages', function() {
     it('should work with custom plain message', function() {
       const rule = { username: 'required|alpha' };

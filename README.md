@@ -58,6 +58,7 @@ class HomeController extends Controller {
 * alpha
 * phone (Chinese Phone Number)
 * password (length: 8-18, alphanumberic and &*;+$,?#[]%)
+* captcha
 
 ## License
 
