@@ -45,8 +45,7 @@ class HomeController extends Controller {
     const { app, ctx } = this;
     const rule = { username: 'required|alpha' };
     const value = { username: 'runrioter2' };
-    const messages = { 'username.alpha': '该字段应该为字母串' };
-    const errors = app.validator.validate(value, rule, messages)
+    const errors = app.validator.validate(value, rule)
     // ...
   }
 }
@@ -61,6 +60,22 @@ class HomeController extends Controller {
 * captcha
 * accepted
 * email
+
+## Messages
+
+We can customize validation messages
+
+```js
+class HomeController extends Controller {
+  async index() {
+    const { ctx } = this;
+    const rule = { username: 'required|alpha' };
+    const messages = { 'username.alpha': '该字段应该为字母串' };
+    ctx.validate(rule, messages);
+    // ...
+  }
+}
+```
 
 ## License
 
