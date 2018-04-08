@@ -5,6 +5,8 @@ const alpha = require('./lib/alpha');
 const phone = require('./lib/phone');
 const password = require('./lib/password');
 const captcha = require('./lib/captcha');
+const accepted = require('./lib/accepted');
+const email = require('./lib/email');
 
 const VERIFIERS = {
   required,
@@ -12,6 +14,8 @@ const VERIFIERS = {
   phone,
   password,
   captcha,
+  accepted,
+  email,
 };
 
 /**

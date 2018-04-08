@@ -4,8 +4,8 @@ module.exports = {
   /**
    * validate data with rules
    *
-   * @param  {Object} rules  - validate rule object, see [parameter](https://github.com/node-modules/parameter)
-   * @param  {Array} [messages] - validate target, default to `this.request.body`
+   * @param  {Object} rules  - validate rule object
+   * @param  {Array} [messages] - validate body, default to `this.request.body`
    */
   validate(rules, messages) {
     const errors = this.app.validator.validate(this.request.body, rules, messages);

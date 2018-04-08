@@ -14,10 +14,36 @@ describe('test/valid.test.js', () => {
   after(() => app.close());
   afterEach(mock.restore);
 
-  it('should GET /', () => {
+  it('should throw 422 response if rule validated falied', () => {
     return app.httpRequest()
-      .get('/')
-      .expect('hi, valid')
-      .expect(200);
+      .post('/form')
+      .set('Accept', 'application/json')
+      .send({
+        username: 'Runrioter1',
+        password: '',
+      })
+      .expect(422)
+      .expect({
+        code: 'invalid_param',
+        message: 'Validation Failed',
+        errors: [
+          { code: 'invalid', message: 'The field must be entirely alphabetic characters.', field: 'username' },
+          { code: 'missing_field', message: 'required', field: 'password' },
+        ],
+      });
+  });
+  it('should ok response if all rules passed', () => {
+    return app.httpRequest()
+      .post('/form')
+      .set('Accept', 'application/json')
+      .send({
+        username: 'Runrioter',
+        password: '12345678[',
+      })
+      .expect(200)
+      .expect({
+        username: 'Runrioter',
+        password: '12345678[',
+      });
   });
 });
