@@ -7,6 +7,7 @@ const password = require('./lib/password');
 const captcha = require('./lib/captcha');
 const accepted = require('./lib/accepted');
 const email = require('./lib/email');
+const numeric = require('./lib/numeric');
 
 const VERIFIERS = {
   required,
@@ -16,6 +17,7 @@ const VERIFIERS = {
   captcha,
   accepted,
   email,
+  numeric,
 };
 
 /**
@@ -33,12 +35,17 @@ class Validation {
     const verifierNames = ruleString.split('|');
     const verifiers = [];
     for (const verifierName of verifierNames) {
-      const verifier = VERIFIERS[verifierName];
-      if (!verifier) throw new TypeError(`Rule ${verifierName} is not builtin, check your type or you should add custom rule`);
-      if (verifierName === 'required') {
-        verifiers.unshift(verifier);
+      const [ verifierRuleName, verifierOptStr ] = verifierName.split(':', 2);
+      const verifier = VERIFIERS[verifierRuleName];
+      if (!verifier) throw new TypeError(`Rule ${verifierRuleName} is not builtin, check your type or you should add custom rule`);
+      let options = null;
+      if (typeof verifierOptStr === 'string' && verifierOptStr.trim()) {
+        options = verifierOptStr.trim().split(',');
+      }
+      if (verifierRuleName === 'required') {
+        verifiers.unshift(verifier(options));
       } else {
-        verifiers.push(verifier);
+        verifiers.push(verifier(options));
       }
     }
     return verifiers;

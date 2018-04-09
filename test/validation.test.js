@@ -218,6 +218,41 @@ describe('Validation', function() {
       });
     });
 
+    describe('numeric', function() {
+      it('should be a valid numeric string', function() {
+        const rule = { numeric: 'required|numeric' };
+        const value = { numeric: '0123456' };
+        const messages = { 'numeric.numeric': 'should be numeric' };
+        should.not.exist(validation.validate(value, rule, messages));
+      });
+      it('should be not a valid numeric', function() {
+        const rule = { numeric: 'required|numeric' };
+        const value = { numeric: '0122345o' };
+        const messages = { 'numeric.numeric': 'should be numeric' };
+        validation.validate(value, rule, messages)[0].should.eql({
+          code: 'invalid',
+          field: 'numeric',
+          message: 'should be numeric',
+        });
+      });
+      it('should be a valid numeric with length option', function() {
+        const rule = { numeric: 'required|numeric:6' };
+        const value = { numeric: '012345' };
+        const messages = { 'numeric.numeric': 'should be numeric' };
+        should.not.exist(validation.validate(value, rule, messages));
+      });
+      it('should be not a valid numeric with length option', function() {
+        const rule = { numeric: 'required|numeric:6' };
+        const value = { numeric: '01234a' };
+        const messages = { 'numeric.numeric': 'numeric field should be a numeric with a length of 6' };
+        validation.validate(value, rule, messages)[0].should.eql({
+          code: 'invalid',
+          field: 'numeric',
+          message: 'numeric field should be a numeric with a length of 6',
+        });
+      });
+    });
+
   });
 
   describe('#messages', function() {
