@@ -1,24 +1,9 @@
 'use strict';
 
-const required = require('./lib/required');
-const alpha = require('./lib/alpha');
-const phone = require('./lib/phone');
-const password = require('./lib/password');
-const captcha = require('./lib/captcha');
-const accepted = require('./lib/accepted');
-const email = require('./lib/email');
-const numeric = require('./lib/numeric');
-
-const VERIFIERS = {
-  required,
-  alpha,
-  phone,
-  password,
-  captcha,
-  accepted,
-  email,
-  numeric,
-};
+/**
+ * all verifiers
+ */
+const VERIFIERS = require('./lib');
 
 /**
  * Validation class
@@ -60,12 +45,8 @@ class Validation {
    * @api public
    */
   validate(data, rules, messages = {}) {
-    if (!rules || typeof rules !== 'object') {
-      throw new TypeError('rules should be non-null object');
-    }
-
+    rules = Object.assign({}, rules);
     const errors = [];
-
     for (const field in rules) {
       const verifiers = Validation.parseVerifiers(rules[field]);
       for (const i in verifiers) {

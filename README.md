@@ -20,9 +20,9 @@
 [download-image]: https://img.shields.io/npm/dm/egg-valid.svg?style=flat-square
 [download-url]: https://npmjs.org/package/egg-valid
 
-A better Validation plugin like laravel validation
+A better Validation plugin inspired by Laravel
 
-[WIP] 当前功能很鸡肋，等待丰富
+**[WIP]**
 
 ## Install
 

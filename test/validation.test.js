@@ -6,19 +6,6 @@ const validation = new Validation();
 
 describe('Validation', function() {
 
-  describe('#validate', function() {
-    it('should receive a non-null object', function() {
-      (function() {
-        const rules = null;
-        validation.validate({}, rules);
-      }).should.throw('rules should be non-null object');
-      (function() {
-        const rules = () => {};
-        validation.validate({}, rules);
-      }).should.throw('rules should be non-null object');
-    });
-  });
-
   describe('#rules', function() {
     describe('required', function() {
 
