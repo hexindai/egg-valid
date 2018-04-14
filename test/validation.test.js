@@ -122,14 +122,23 @@ describe('Validation', function() {
 
     describe('password', function() {
       it('should is a valid password', function() {
-        const rule = { password: 'required|password' };
-        const value = { password: '&*;+$,?#[]' };
-        const messages = { 'password.password': '密码格式错误' };
+        const rule = {
+          password: 'required|password',
+          password1: 'required|password',
+        };
+        const value = {
+          password: '012345abcdef',
+          password1: '&*;+$,?#\\[]%',
+        };
+        const messages = {
+          'password.password': '密码格式错误',
+          'password1.password': '密码格式错误',
+        };
         should.not.exist(validation.validate(value, rule, messages));
       });
       it('should is not a valid password', function() {
         const rule = { password: 'required|password' };
-        const value = { password: '&*;+$,?#[]1234567890' };
+        const value = { password: '&*;+$,?#\\[]1234567890' };
         const messages = { 'password.password': '密码长度有误' };
         validation.validate(value, rule, messages)[0].should.eql({
           code: 'invalid',
