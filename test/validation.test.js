@@ -128,7 +128,7 @@ describe('Validation', function() {
         };
         const value = {
           password: '012345abcdef',
-          password1: '&*;+$,?#\\[]%',
+          password1: '&*;+$,?#[]%',
         };
         const messages = {
           'password.password': '密码格式错误',
@@ -252,7 +252,7 @@ describe('Validation', function() {
   });
 
   describe('#messages', function() {
-    it('should work with custom plain message', function() {
+    it('should work with custom plain messages', function() {
       const rule = { username: 'required|alpha' };
       const value = { username: 'runrioter2' };
       const messages = { 'username.alpha': '该字段应该为字母串' };
