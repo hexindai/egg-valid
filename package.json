@@ -50,12 +50,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eggjs/egg-valid.git"
+    "url": "git+https://github.com/Runrioter/egg-valid.git"
   },
   "bugs": {
-    "url": "https://github.com/eggjs/egg/issues"
+    "url": "https://github.com/Runrioter/egg/issues"
   },
-  "homepage": "https://github.com/eggjs/egg-valid#readme",
+  "homepage": "https://github.com/Runrioter/egg-valid#readme",
   "author": "runrioter@gmail.com",
   "license": "MIT"
 }
