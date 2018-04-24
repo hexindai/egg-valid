@@ -27,8 +27,10 @@ describe('test/valid.test.js', () => {
         code: 'invalid_param',
         message: 'Validation Failed',
         errors: [
-          { code: 'invalid', message: 'The field must be entirely alphabetic characters.', field: 'username' },
-          { code: 'missing_field', message: 'required', field: 'password' },
+          { code: 'invalid', message: 'The field only contains letters.', field: 'username' },
+          { code: 'missing_field', message: 'The field is a must', field: 'password' },
+          { code: 'missing_field', message: 'The field is a must', field: 'captcha' },
+          { code: 'missing_field', message: 'The field is a must', field: 'phone' },
         ],
       });
   });
@@ -39,11 +41,15 @@ describe('test/valid.test.js', () => {
       .send({
         username: 'Runrioter',
         password: '12345678[',
+        captcha: '123456',
+        phone: '15210001000',
       })
       .expect(200)
       .expect({
         username: 'Runrioter',
         password: '12345678[',
+        captcha: '123456',
+        phone: '15210001000',
       });
   });
 });

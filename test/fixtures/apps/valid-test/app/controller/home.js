@@ -13,8 +13,10 @@ class HomeController extends Controller {
     const rule = {
       username: 'required|alpha',
       password: 'required|password',
+      captcha: 'required|captcha',
+      phone: 'required|phone',
     };
-    ctx.validate(rule);
+    await ctx.validate(rule);
     ctx.body = ctx.request.body;
   }
 }

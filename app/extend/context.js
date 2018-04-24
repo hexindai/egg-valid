@@ -7,8 +7,8 @@ module.exports = {
    * @param  {Object} rules  - validate rule object
    * @param  {Array} [messages] - validate body
    */
-  validate(rules, messages) {
-    const errors = this.app.validator.validate(this.request.body, rules, messages);
+  async validate(rules, messages) {
+    const errors = await this.app.validator.validate(this.request.body, rules, messages);
     if (errors) {
       this.throw(422, 'Validation Failed', {
         code: 'invalid_param',

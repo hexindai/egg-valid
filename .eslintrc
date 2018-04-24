@@ -1,3 +1,7 @@
 {
-  "extends": "eslint-config-egg"
+  "extends": "eslint-config-egg",
+  "rules": {
+    "no-bitwise": ["error", { "allow": ["~"] }],
+    "no-cond-assign": "error"
+  }
 }

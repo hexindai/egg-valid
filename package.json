@@ -11,7 +11,8 @@
     "egg-plugin"
   ],
   "dependencies": {
-    "@killara/is": "^1.1.2"
+    "@killara/is": "^1.1.2",
+    "@killara/validation": "^1.0.2"
   },
   "devDependencies": {
     "autod": "^3.0.1",
@@ -41,9 +42,8 @@
   "files": [
     "app",
     "config",
-    "app.js",
-    "validation.js",
-    "lib"
+    "lib",
+    "app.js"
   ],
   "ci": {
     "version": "8, 9"

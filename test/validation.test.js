@@ -1,127 +1,121 @@
 'use strict';
 
 const should = require('should');
-const Validation = require('../validation');
-const validation = new Validation();
+const validation = require('@killara/validation');
 
 describe('Validation', function() {
 
   describe('#rules', function() {
     describe('required', function() {
 
-      it('missing required field', function() {
+      it('missing required field', async function() {
         const rule = { int: 'required' };
-        validation.validate({}, rule)[0].should.eql({
+        const error = await validation.validate({}, rule);
+        error.should.eql([{
           code: 'missing_field',
           field: 'int',
-          message: 'required',
-        });
+          message: 'The field is a must',
+        }]);
       });
 
-      it('missing no-required field', function() {
+      it('missing no-required field', async function() {
         const rule = { int: 'alpha' };
-        should.not.exist(validation.validate({}, rule));
+        should.not.exist(await validation.validate({}, rule));
       });
 
-      it('pass value to no-required field', function() {
+      it('pass value to no-required field', async function() {
         const value = { int: '1abc' };
         const rule = { int: 'alpha' };
-        validation.validate(value, rule)[0].should.eql({
+        const errors = await validation.validate(value, rule);
+        errors.should.eql([{
           code: 'invalid',
           field: 'int',
-          message: 'The field must be entirely alphabetic characters.',
-        });
+          message: 'The field only contains letters.',
+        }]);
       });
 
-      it('pass value to required rule and another rule', function() {
+      it('pass value to required rule and another rule', async function() {
         const rule = { username: 'required|alpha' };
         const value = { username: 'runrioter' };
-        should.not.exist(validation.validate(value, rule));
+        should.not.exist(await validation.validate(value, rule));
       });
 
-      it('required rule can be put anywhere', function() {
+      it('required rule can be put anywhere', async function() {
         const rule = { username: 'alpha|required' };
-        validation.validate({}, rule)[0].should.eql({
+        const errors = await validation.validate({}, rule);
+        errors.should.eql([{
           code: 'missing_field',
           field: 'username',
-          message: 'required',
-        });
+          message: 'The field is a must',
+        }]);
       });
 
       it('should throw type error when use unknown rule', function() {
-        (function() {
+        return new Promise((resolve, reject) => {
           const rule = { username: 'required|alpha1' };
           const value = { username: 'runrioter' };
-          validation.validate(value, rule);
-        }).should.throw('Rule alpha1 is not builtin, check your type or you should add custom rule');
+          try {
+            validation.validate(value, rule).then(resolve).catch(reject);
+          } catch (e) {
+            reject(e);
+          }
+        }).should.be.rejectedWith('Rule `alpha1` may be not a built-in rule, please add it.');
       });
 
-      it('value should not be null, undefined, "", {}, []', function() {
+      it('value should not be null, undefined, ""', async function() {
         const value = {
           field1: null,
           field2: undefined,
           field3: '',
-          field4: {},
-          field5: [],
         };
         const rule = {
           field1: 'required',
           field2: 'required',
           field3: 'required',
-          field4: 'required',
-          field5: 'required',
         };
-        validation.validate(value, rule).should.eql([
+        const errors = await validation.validate(value, rule);
+        errors.should.eql([
           {
             code: 'missing_field',
             field: 'field1',
-            message: 'required',
+            message: 'The field is a must',
           },
           {
             code: 'missing_field',
             field: 'field2',
-            message: 'required',
+            message: 'The field is a must',
           },
           {
             code: 'missing_field',
             field: 'field3',
-            message: 'required',
-          },
-          {
-            code: 'missing_field',
-            field: 'field4',
-            message: 'required',
-          },
-          {
-            code: 'missing_field',
-            field: 'field5',
-            message: 'required',
+            message: 'The field is a must',
           },
         ]);
       });
     });
 
     describe('phone', function() {
-      it('should is a valid phone number', function() {
+      it('should is a valid phone number', async function() {
         const rule = { phone: 'required|phone' };
         const value = { phone: '15210001000' };
         const messages = { 'phone.phone': '该手机号不合法' };
-        should.not.exist(validation.validate(value, rule, messages));
+        should.not.exist(await validation.validate(value, rule, messages));
       });
-      it('should is not a valid phone number', function() {
+      it('should is not a valid phone number', async function() {
         const rule = { phone: 'required|phone' };
         const value = { phone: '25210001000' };
         const messages = { 'phone.phone': '该手机号不合法' };
-        validation.validate(value, rule, messages)[0].should.eql({
+        const errors = await validation.validate(value, rule, messages);
+        errors.should.eql([{
           code: 'invalid',
           field: 'phone',
           message: '该手机号不合法',
-        });
+        }]);
       });
     });
 
     describe('password', function() {
-      it('should is a valid password', function() {
+      it('should is a valid password', async function() {
         const rule = {
           password: 'required|password',
           password1: 'required|password',
@@ -134,47 +128,49 @@ describe('Validation', function() {
           'password.password': '密码格式错误',
           'password1.password': '密码格式错误',
         };
-        should.not.exist(validation.validate(value, rule, messages));
+        should.not.exist(await validation.validate(value, rule, messages));
       });
-      it('should is not a valid password', function() {
+      it('should is not a valid password', async function() {
         const rule = { password: 'required|password' };
         const value = { password: '&*;+$,?#\\[]1234567890' };
         const messages = { 'password.password': '密码长度有误' };
-        validation.validate(value, rule, messages)[0].should.eql({
+        const errors = await validation.validate(value, rule, messages);
+        errors.should.eql([{
           code: 'invalid',
           field: 'password',
           message: '密码长度有误',
-        });
+        }]);
       });
     });
 
     describe('captcha', function() {
-      it('should is a valid captcha', function() {
+      it('should is a valid captcha', async function() {
         const rule = { captcha: 'required|captcha' };
         const value = { captcha: '123456' };
         const messages = { 'captcha.captcha': '手机验证码错误' };
-        should.not.exist(validation.validate(value, rule, messages));
+        should.not.exist(await validation.validate(value, rule, messages));
       });
-      it('should is not a valid captcha', function() {
+      it('should is not a valid captcha', async function() {
         const rule = { captcha: 'required|captcha' };
         const value = { captcha: '12345i' };
         const messages = { 'captcha.captcha': '手机验证码错误' };
-        validation.validate(value, rule, messages)[0].should.eql({
+        const errors = await validation.validate(value, rule, messages);
+        errors.should.eql([{
           code: 'invalid',
           field: 'captcha',
           message: '手机验证码错误',
-        });
+        }]);
       });
     });
 
     describe('accepted', function() {
-      it('should is a valid captcha', function() {
+      it('should is a valid captcha', async function() {
         const rule = { captcha: 'required|captcha' };
         const value = { captcha: '123456' };
         const messages = { 'captcha.captcha': '手机验证码错误' };
-        should.not.exist(validation.validate(value, rule, messages));
+        should.not.exist(await validation.validate(value, rule, messages));
       });
-      it('should be "yes", "on", "1", 1, true, "true"', function() {
+      it('should be "yes", "on", "1", 1, true, "true"', async function() {
         const value = {
           field1: 'yes',
           field2: 'on',
@@ -191,76 +187,80 @@ describe('Validation', function() {
           field5: 'accepted',
           field6: 'accepted',
         };
-        should.not.exist(validation.validate(value, rule));
+        should.not.exist(await validation.validate(value, rule));
       });
     });
 
     describe('email', function() {
-      it('should be a valid email', function() {
+      it('should be a valid email', async function() {
         const rule = { email: 'required|email' };
         const value = { email: 'runrioter@gmail.com' };
         const messages = { 'email.email': '邮箱格式错误' };
-        should.not.exist(validation.validate(value, rule, messages));
+        should.not.exist(await validation.validate(value, rule, messages));
       });
-      it('should be not a valid email', function() {
+      it('should be not a valid email', async function() {
         const rule = { email: 'required|email' };
         const value = { email: 'runriotergmail.com' };
         const messages = { 'email.email': '邮箱格式错误' };
-        validation.validate(value, rule, messages)[0].should.eql({
+        const errors = await validation.validate(value, rule, messages);
+        errors.should.eql([{
           code: 'invalid',
           field: 'email',
           message: '邮箱格式错误',
-        });
+        }]);
       });
     });
 
     describe('numeric', function() {
-      it('should be a valid numeric string', function() {
+      it('should be a valid numeric string', async function() {
         const rule = { numeric: 'required|numeric' };
         const value = { numeric: '0123456' };
         const messages = { 'numeric.numeric': 'should be numeric' };
-        should.not.exist(validation.validate(value, rule, messages));
+        should.not.exist(await validation.validate(value, rule, messages));
       });
-      it('should be not a valid numeric', function() {
+      it('should be not a valid numeric', async function() {
         const rule = { numeric: 'required|numeric' };
         const value = { numeric: '0122345o' };
         const messages = { 'numeric.numeric': 'should be numeric' };
-        validation.validate(value, rule, messages)[0].should.eql({
+        const errors = await validation.validate(value, rule, messages);
+        errors.should.eql([{
           code: 'invalid',
           field: 'numeric',
           message: 'should be numeric',
-        });
+        }]);
       });
-      it('should be a valid numeric with length option', function() {
+      it('should be a valid numeric with length option', async function() {
         const rule = { numeric: 'required|numeric:6' };
         const value = { numeric: '012345' };
         const messages = { 'numeric.numeric': 'should be numeric' };
-        should.not.exist(validation.validate(value, rule, messages));
+        should.not.exist(await validation.validate(value, rule, messages));
       });
-      it('should be not a valid numeric with length option', function() {
+      it('should be not a valid numeric with length option', async function() {
         const rule = { numeric: 'required|numeric:6' };
         const value = { numeric: '01234a' };
         const messages = { 'numeric.numeric': 'numeric field should be a numeric with a length of 6' };
-        validation.validate(value, rule, messages)[0].should.eql({
+        const errors = await validation.validate(value, rule, messages);
+        errors.should.eql([{
           code: 'invalid',
           field: 'numeric',
           message: 'numeric field should be a numeric with a length of 6',
-        });
+        }]);
       });
     });
 
   });
 
   describe('#messages', function() {
-    it('should work with custom plain messages', function() {
+    it('should work with custom plain messages', async function() {
       const rule = { username: 'required|alpha' };
       const value = { username: 'runrioter2' };
       const messages = { 'username.alpha': '该字段应该为字母串' };
-      validation.validate(value, rule, messages)[0].should.eql({
+      const errors = await validation.validate(value, rule, messages);
+      errors.should.eql([{
         code: 'invalid',
         field: 'username',
         message: '该字段应该为字母串',
-      });
+      }]);
     });
   });
 });
