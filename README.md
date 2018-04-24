@@ -11,12 +11,12 @@ A better Validation egg plugin based on [@killara/validation](https://github.com
 
 [npm-image]: https://img.shields.io/npm/v/egg-valid.svg
 [npm-url]: https://npmjs.org/package/egg-valid
-[travis-image]: https://img.shields.io/travis/Runrioter/egg-valid.svg
-[travis-url]: https://travis-ci.org/Runrioter/egg-valid
-[codecov-image]: https://img.shields.io/codecov/c/github/Runrioter/egg-valid.svg
-[codecov-url]: https://codecov.io/github/Runrioter/egg-valid?branch=master
-[david-image]: https://img.shields.io/david/Runrioter/egg-valid.svg
-[david-url]: https://david-dm.org/Runrioter/egg-valid
+[travis-image]: https://img.shields.io/travis/hexindai/egg-valid.svg
+[travis-url]: https://travis-ci.org/hexindai/egg-valid
+[codecov-image]: https://img.shields.io/codecov/c/github/hexindai/egg-valid.svg
+[codecov-url]: https://codecov.io/github/hexindai/egg-valid?branch=master
+[david-image]: https://img.shields.io/david/hexindai/egg-valid.svg
+[david-url]: https://david-dm.org/hexindai/egg-valid
 [snyk-image]: https://snyk.io/test/npm/egg-valid/badge.svg
 [snyk-url]: https://snyk.io/test/npm/egg-valid
 [download-image]: https://img.shields.io/npm/dm/egg-valid.svg
