@@ -53,31 +53,51 @@ class HomeController extends Controller {
 ### Derived from [@killara/validation](https://github.com/killara/validation)
 
 * accepted
+  * string style: `field: 'accepted'`
+  * object style: `field: { accepted: true }`
 * alpha
+  * string style: `field: 'alpha:6'` or `field: 'alpha:len=6'`
+  * object style: `field: { alpha: { len: 6 } }`
 * email
+  * string style: `field: 'email:true'`
+  * object style: `field: { email: true }`
 * in
+  * `array` style: `field: [ 'basketball', 'football' ]`
+  * object style: `field: { in: [ 'basketball', 'football' ] }`
 * numeric
+  * string style: `field: 'numeric:6'` or `field: 'numeric:len=6'`
+  * object style: `field: { numeric: { len: 6 } }`
 * regexp
+  * string style: `field: 'regexp:"^123456$"'`
+  * object style: `field: { regexp: new RegExp(/abc/, 'i') }` or `field: { regexp: /^[0-9a-zA-z]{8,16}$/ }`
 * required
+  * string style: `field: 'required'` or `field: 'required:true'`
+  * object style: `field: { required: true }`
 
 **[More](https://github.com/killara/validation)**
 
 ### Custom rules
 
-* phone (Chinese Phone Number)
+* phone (currently support China phone number only)
+  * string style: `field: 'required|phone'`
 * password (length: 8-18, alphanumeric and &*;+$,?#[]%)
+  * string style:`field: 'password'` or `field: 'password:min=8,max=18'` or `field: 'password:"^[a-z0-9!()-._@#]{8,18}$"'`
 * captcha (phone auth code)
+  * string style:`field: 'captcha'` or `field: 'captcha:6'`
+  * object style: `field: { captcha: { len: 6} }`
 
 ## Messages
 
-We can customize validation messages
+Customize validation messages
+
+### via API
 
 ```js
 class HomeController extends Controller {
   async index() {
     const { app } = this;
-    const rule = { username: 'required|alpha' };
-    const messages = { 'username.alpha': '该字段应该为字母串' };
+    const rule = { username: 'required|alpha:6' };
+    const messages = { 'username.alpha': '该字段应该为长度为6的字母串' };
     const errors = await app.validation.validate(rule, messages);
     if (errors) {
       // ...
@@ -86,6 +106,21 @@ class HomeController extends Controller {
     }
   }
 }
+```
+
+### via config
+
+```js
+exports.valid = {
+  rules: {
+    custom: field => options => params => {
+      //... return a boolean
+    }
+  },
+  messages: {
+    custom: 'a custom message...',
+  },
+};
 ```
 
 ## License

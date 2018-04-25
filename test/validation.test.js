@@ -119,10 +119,12 @@ describe('Validation', function() {
         const rule = {
           password: 'required|password',
           password1: 'required|password',
+          password2: 'required|password:"^[a-z0-9!()-._@#]{8,18}$"',
         };
         const value = {
           password: '012345abcdef',
           password1: '&*;+$,?#[]%',
+          password2: '0a!()-._@#',
         };
         const messages = {
           'password.password': '密码格式错误',
@@ -140,6 +142,18 @@ describe('Validation', function() {
           field: 'password',
           message: '密码长度有误',
         }]);
+      });
+      it('should throw with wrong min, max', function() {
+        return new Promise((resolve, reject) => {
+          const rule = { password: 'required|password:min=18,max=8' };
+          const value = { password: '&*;+$,?#[]1234567890' };
+          const messages = { 'password.password': '密码长度有误' };
+          try {
+            validation.validate(value, rule, messages).then(resolve).catch(reject);
+          } catch (e) {
+            reject(e);
+          }
+        }).should.be.rejectedWith('min and max shoud be in the valid range');
       });
     });
 
@@ -160,6 +174,23 @@ describe('Validation', function() {
           field: 'captcha',
           message: '手机验证码错误',
         }]);
+      });
+      it('custom captcha length', async function() {
+        const rule = { captcha: 'required|captcha:len=6' };
+        const value = { captcha: '1234567' };
+        const messages = { 'captcha.captcha': '手机验证码错误' };
+        const errors = await validation.validate(value, rule, messages);
+        errors.should.eql([{
+          code: 'invalid',
+          field: 'captcha',
+          message: '手机验证码错误',
+        }]);
+      });
+      it('any captcha length', async function() {
+        const rule = { captcha: 'required|captcha:0' };
+        const value = { captcha: '1234566' };
+        const messages = { 'captcha.captcha': '手机验证码错误' };
+        should.not.exist(await validation.validate(value, rule, messages));
       });
     });
 
