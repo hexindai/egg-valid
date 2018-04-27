@@ -58,6 +58,9 @@ class HomeController extends Controller {
 * alpha
   * string style: `field: 'alpha:6'` or `field: 'alpha:len=6'`
   * object style: `field: { alpha: { len: 6 } }`
+* date
+  * string style: `field: 'date'`
+  * object style: `field: { date: true }`
 * email
   * string style: `field: 'email:true'`
   * object style: `field: { email: true }`
@@ -122,6 +125,13 @@ exports.valid = {
   },
 };
 ```
+
+### API
+
+### validation.addRule(name: string, ruleFunc: (field: string) => (options: any) => (params: object) => bool)
+* Add custom rule
+### validation.addMessage(name: string, message: string)
+* Add custom message
 
 ## License
 
