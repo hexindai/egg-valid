@@ -67,6 +67,9 @@ class HomeController extends Controller {
 * in
   * `array` style: `field: [ 'basketball', 'football' ]`
   * object style: `field: { in: [ 'basketball', 'football' ] }`
+* money
+  * string style: `field: 'money'` or `field: 'money:0'` `field: 'money:2'` (default)
+  * object style: `field: { money: { decimal: true } }` or `field: { money: { decimal: 0 } }` or `field: { money: { decimal: 2 } }`
 * numeric
   * string style: `field: 'numeric:6'` or `field: 'numeric:len=6'`
   * object style: `field: { numeric: { len: 6 } }`
