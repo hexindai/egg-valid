@@ -61,6 +61,12 @@ class HomeController extends Controller {
 * date
   * string style: `field: 'date'`
   * object style: `field: { date: true }`
+* datetime
+  * string style: `field: 'datetime'`
+  * object style: `field: { datetime: true }`
+* time
+  * string style: `field: 'time'`
+  * object style: `field: { time: true }`
 * email
   * string style: `field: 'email:true'`
   * object style: `field: { email: true }`
@@ -80,7 +86,7 @@ class HomeController extends Controller {
   * string style: `field: 'required'` or `field: 'required:true'`
   * object style: `field: { required: true }`
 
-**[More](https://github.com/killara/validation)**
+**[More rules](https://github.com/killara/validation)**
 
 ### Custom rules
 
