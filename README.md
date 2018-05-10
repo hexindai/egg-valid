@@ -126,7 +126,7 @@ class HomeController extends Controller {
 exports.valid = {
   rules: {
     custom: field => context => params => {
-      const { app } = context; // app comes from egg
+      const { app, ctx } = context; // app comes from egg
       //... return a boolean
     }
   },
