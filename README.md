@@ -125,7 +125,8 @@ class HomeController extends Controller {
 ```js
 exports.valid = {
   rules: {
-    custom: field => options => params => {
+    custom: field => context => params => {
+      const { app } = context; // app comes from egg
       //... return a boolean
     }
   },
@@ -137,7 +138,7 @@ exports.valid = {
 
 ### API
 
-### validation.addRule(name: string, ruleFunc: (field: string) => (options: any) => (params: object) => bool)
+### validation.addRule(name: string, ruleFunc: (field: string) => (context: object) => (params: object) => bool)
 * Add custom rule
 ### validation.addMessage(name: string, message: string)
 * Add custom message

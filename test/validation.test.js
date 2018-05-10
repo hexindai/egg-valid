@@ -1,7 +1,8 @@
 'use strict';
 
 const should = require('should');
-const validation = require('@killara/validation');
+const Validation = require('@killara/validation');
+const validation = new Validation();
 
 describe('Validation', function() {
 
