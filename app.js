@@ -1,9 +1,12 @@
 'use strict';
 
-const validation = require('@killara/validation');
+const Validation = require('@killara/validation');
+
 const pkg = require('./package.json');
 
 module.exports = app => {
+  const ctx = app.createAnonymousContext();
+  const validation = new Validation({ app, ctx });
 
   const pluginName = pkg.eggPlugin.name;
   const { rules, messages } = app.config[pluginName];

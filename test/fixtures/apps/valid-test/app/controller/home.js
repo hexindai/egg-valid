@@ -15,6 +15,7 @@ class HomeController extends Controller {
       password: 'required|password',
       captcha: 'required|captcha',
       phone: 'required|phone',
+      requiredapp: 'required|custom',
     };
     await ctx.validate(rule);
     ctx.body = ctx.request.body;
