@@ -41,8 +41,7 @@ class HomeController extends Controller {
   async index() {
     const { app, ctx } = this;
     const rule = { username: 'required|alpha' };
-    const value = { username: 'runrioter2' };
-    const errors = await app.validator.validate(value, rule)
+    const errors = await app.validator.validate(ctx.request.body, rule)
     // ...
   }
 }
@@ -102,15 +101,15 @@ class HomeController extends Controller {
 
 Customize validation messages
 
-### via API
+### Via API
 
 ```js
 class HomeController extends Controller {
   async index() {
-    const { app } = this;
+    const { app, ctx } = this;
     const rule = { username: 'required|alpha:6' };
     const messages = { 'username.alpha': '该字段应该为长度为6的字母串' };
-    const errors = await app.validation.validate(rule, messages);
+    const errors = await app.validation.validate(ctx.request.body, rule, messages);
     if (errors) {
       // ...
     } else {
@@ -120,7 +119,7 @@ class HomeController extends Controller {
 }
 ```
 
-### via config
+### Via configuration
 
 ```js
 exports.valid = {
