@@ -57,6 +57,12 @@ class HomeController extends Controller {
 * alpha
   * string style: `field: 'alpha:6'` or `field: 'alpha:len=6'`
   * object style: `field: { alpha: { len: 6 } }`
+* confirmed
+
+  Rule `confirmed`: the `field` need to have the same value as the value that be filled by `field_confirmed`. We can change `field_confirmed` to any names with `confirmed:"custom"`
+
+  * string style: `field: 'confirmed'` or `field: 'confirmed"custom_field_name"'`
+  * object style: `field: { confirmed: { len: 6 } }`
 * date
   * string style: `field: 'date'`
   * object style: `field: { date: true }`
