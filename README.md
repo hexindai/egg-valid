@@ -61,7 +61,7 @@ class HomeController extends Controller {
 
   Rule `confirmed`: the `field` need to have the same value as the value that be filled by `field_confirmation`. We can change `field_confirmation` to any names with `confirmed:"custom"`
 
-  * string style: `field: 'confirmed'` or `field: 'confirmed"custom_field_name"'`
+  * string style: `field: 'confirmed'` or `field: 'confirmed:"custom_field_name"'`
   * object style: `field: { confirmed: "custom_field_name" }`
 * date
   * string style: `field: 'date'`
