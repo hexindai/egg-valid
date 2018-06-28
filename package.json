@@ -1,6 +1,6 @@
 {
   "name": "egg-valid",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "Validation plugin for egg",
   "eggPlugin": {
     "name": "valid"
@@ -11,7 +11,7 @@
     "egg-plugin"
   ],
   "dependencies": {
-    "@killara/is": "^1.1.2",
+    "@killara/is": "^1.1.4",
     "@killara/validation": "^2.2.2"
   },
   "devDependencies": {
