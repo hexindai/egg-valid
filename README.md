@@ -115,7 +115,7 @@ class HomeController extends Controller {
     const { app, ctx } = this;
     const rule = { username: 'required|alpha:6' };
     const messages = { 'username.alpha': '该字段应该为长度为6的字母串' };
-    const errors = await app.validation.validate(ctx.request.body, rule, messages);
+    const errors = await app.validator.validate(ctx.request.body, rule, messages);
     if (errors) {
       // ...
     } else {
